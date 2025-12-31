@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage;
 use Symfony\Component\RemoteEvent\RemoteEvent;
@@ -25,7 +26,7 @@ class WebhookControllerTest extends TestCase
 {
     public function testNoParserAvailable()
     {
-        $controller = new WebhookController([], $this->createMock(MessageBusInterface::class));
+        $controller = new WebhookController([], new MessageBus());
 
         $response = $controller->handle('foo', new Request());
 
@@ -53,7 +54,7 @@ class WebhookControllerTest extends TestCase
 
         $controller = new WebhookController(
             ['foo' => ['parser' => $parser, 'secret' => $secret]],
-            $this->createMock(MessageBusInterface::class)
+            new MessageBus()
         );
 
         $response = $controller->handle('foo', $request);
