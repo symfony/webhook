@@ -41,6 +41,11 @@ abstract class AbstractRequestParser implements RequestParserInterface
 
     abstract protected function getRequestMatcher(): RequestMatcherInterface;
 
+    /**
+     * @return RemoteEvent|RemoteEvent[]|null
+     *
+     * @throws RejectWebhookException When the payload is rejected (signature issue, parse issue, ...)
+     */
     abstract protected function doParse(Request $request, #[\SensitiveParameter] string $secret): RemoteEvent|array|null;
 
     protected function validate(Request $request): void
