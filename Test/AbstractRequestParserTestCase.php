@@ -58,7 +58,7 @@ abstract class AbstractRequestParserTestCase extends TestCase
     protected function createRequest(string $payload): Request
     {
         return Request::create('/', 'POST', [], [], [], [
-            'Content-Type' => 'application/json',
+            'CONTENT_TYPE' => 'application/json',
         ], $payload);
     }
 
